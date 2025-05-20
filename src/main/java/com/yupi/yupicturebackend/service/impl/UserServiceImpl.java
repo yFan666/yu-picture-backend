@@ -15,6 +15,18 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
 
+    @Override
+    public long userRegister(String userAccount, String userPassword, String checkPassword) {
+        // 1. 校验参数
+
+        // 2. 检查用户账号是否和数据库中已有的重复
+
+        // 3. 密码一定要加密
+
+        // 4. 插入数据到数据库中
+
+        return 0;
+    }
 }
 
 
