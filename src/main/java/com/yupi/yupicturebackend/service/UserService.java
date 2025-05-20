@@ -1,6 +1,6 @@
-package generator.service;
+package com.yupi.yupicturebackend.service;
 
-import generator.domain.User;
+import com.yupi.yupicturebackend.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
