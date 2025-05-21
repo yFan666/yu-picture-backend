@@ -26,3 +26,10 @@ SELECT
     *
 FROM
     `user` u;
+
+-- 新增用户 yFan666
+INSERT INTO yu_picture.user (id, userAccount, userPassword, userName, userAvatar, userProfile, userRole, editTime,
+                             createTime, updateTime, isDelete)
+VALUES (1925145140651917313, 'yFan666', 'b0dd3697a192885d7c055db46155b26a', '无名', null, null, 'user',
+        '2025-05-21 19:02:23', '2025-05-21 19:02:23', '2025-05-21 19:02:23', 0);
+

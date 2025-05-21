@@ -2,6 +2,9 @@ package com.yupi.yupicturebackend.service;
 
 import com.yupi.yupicturebackend.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yupi.yupicturebackend.model.vo.LoginUserVO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
 * @author yFan
@@ -20,4 +23,29 @@ public interface UserService extends IService<User> {
      */
     long userRegister(String userAccount, String userPassword, String checkPassword);
 
+    /**
+     * 用户登录
+     *
+     * @param userAccount  用户账号
+     * @param userPassword 用户密码
+     * @return 脱敏后的用户信息
+     */
+    LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request);
+
+
+    /**
+     * 获取加密后的密码
+     *
+     * @param userPassword 密码
+     * @return 加密后的密码
+     */
+    String getEncryptPassword(String userPassword);
+
+    /**
+     * 获得脱敏后的登录用户信息
+     *
+     * @param user 用户
+     * @return 脱敏后的用户信息
+     */
+    LoginUserVO getLoginUserVO(User user);
 }
