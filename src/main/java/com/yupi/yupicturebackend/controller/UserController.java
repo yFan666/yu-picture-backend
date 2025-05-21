@@ -6,6 +6,7 @@ import com.yupi.yupicturebackend.exception.ErrorCode;
 import com.yupi.yupicturebackend.exception.ThrowUtils;
 import com.yupi.yupicturebackend.model.dto.UserLoginRequest;
 import com.yupi.yupicturebackend.model.dto.UserRegisterRequest;
+import com.yupi.yupicturebackend.model.entity.User;
 import com.yupi.yupicturebackend.model.vo.LoginUserVO;
 import com.yupi.yupicturebackend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Result;
 
 @RestController
 @RequestMapping("/user")
@@ -50,6 +52,23 @@ public class UserController {
         LoginUserVO loginUserVO = userService.userLogin(userAccount, userPassword, request);
 
         return ResultUtils.success(loginUserVO);
+    }
+
+    /**
+     * 获取当前登录用户
+     */
+    @GetMapping("/get/login")
+    public BaseResponse<LoginUserVO> getLoginUser(HttpServletRequest request) {
+        User loginUser = userService.getLoginUser(request);
+        // 对当前用户脱敏
+        return ResultUtils.success(userService.getLoginUserVO(loginUser));
+    }
+
+    @PostMapping("/logout")
+    public BaseResponse<Boolean> userLogout(HttpServletRequest request) {
+        ThrowUtils.throwIf(request == null, ErrorCode.PARAMS_ERROR);
+        boolean result = userService.getLogoutUser(request);
+        return ResultUtils.success(result);
     }
 
 }

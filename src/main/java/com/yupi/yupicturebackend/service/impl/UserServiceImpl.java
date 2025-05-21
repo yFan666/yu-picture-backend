@@ -28,6 +28,16 @@ import javax.servlet.http.HttpServletRequest;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
 
+    /**
+     * 用户注册方法。
+     * 该方法用于处理用户注册逻辑，包括参数校验、账号唯一性检查、密码加密及数据插入。
+     *
+     * @param userAccount 用户账户，不能为空且长度需大于等于4。
+     * @param userPassword 用户密码，不能为空且长度需大于等于8。
+     * @param checkPassword 确认密码，需与用户密码一致。
+     * @return 返回注册成功后用户的唯一标识符（用户ID）。
+     * @throws BusinessException 如果参数校验失败、账号重复或数据库操作失败，则抛出业务异常。
+     */
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {
         // 1. 校验参数
@@ -66,6 +76,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return user.getId();
     }
 
+    /**
+     * 用户登录方法。
+     * 该方法用于处理用户登录逻辑，包括参数校验、密码加密、用户信息查询及登录态保存。
+     *
+     * @param userAccount 用户账户，不能为空且长度需大于等于4。
+     * @param userPassword 用户密码，不能为空且长度需大于等于8。
+     * @param request HttpServletRequest对象，用于保存用户的登录态。
+     * @return 返回脱敏后的用户登录信息（LoginUserVO）。
+     * @throws BusinessException 如果参数校验失败、用户不存在或密码错误，则抛出业务异常。
+     */
     @Override
     public LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request) {
         // 1. 校验
@@ -98,6 +118,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         return this.getLoginUserVO(user);
     }
+
     /**
      * 加密算法
      * @param userPassword 用户密码
@@ -111,6 +132,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     /**
+     * 获取当前登录用户信息。
+     * 该方法通过请求中保存的登录态获取用户信息，并从数据库中验证和返回完整的用户数据。
+     * 如果用户未登录或登录态无效，则抛出业务异常。
+     *
+     * @param request HttpServletRequest对象，用于获取用户的登录态信息。
+     * @return 返回当前登录用户的完整信息。
+     * @throws BusinessException 如果用户未登录或登录态无效，则抛出业务异常。
+     */
+    @Override
+    public User getLoginUser(HttpServletRequest request) {
+        // 判断是否已经登录
+        Object userObj = request.getSession().getAttribute(UserConstant.USER_LOGIN_STATUS);
+        User currentUser = (User) userObj;
+        if (currentUser == null || currentUser.getId() == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+        }
+
+        // 从数据库中查询(追求性能的话可以主食，直接返回上述结果)
+        Long userId = currentUser.getId();
+        currentUser = this.getById(userId);
+        if (currentUser == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+        }
+
+        return currentUser;
+    }
+
+    /**
      * 获取脱敏类的用户信息
      *
      * @param user 用户
@@ -121,6 +170,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         LoginUserVO loginUserVO = new LoginUserVO();
         BeanUtil.copyProperties(user, loginUserVO);
         return loginUserVO;
+    }
+
+    @Override
+    public boolean getLogoutUser(HttpServletRequest request) {
+        Object userObj = request.getSession().getAttribute(UserConstant.USER_LOGIN_STATUS);
+        if (userObj == null) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "未登录");
+        }
+
+        request.getSession().removeAttribute(UserConstant.USER_LOGIN_STATUS);
+        return true;
     }
 }
 

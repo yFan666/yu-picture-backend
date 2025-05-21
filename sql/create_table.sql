@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS yu_picture;
 -- 切换库
 USE yu_picture;
 -- 用户表
-CREATE TABLE IF NOT EXISTS USER
+CREATE TABLE IF NOT EXISTS user
 (
     id bigint AUTO_INCREMENT comment 'id' PRIMARY KEY,
     userAccount varchar(256) NOT NULL comment '账号',

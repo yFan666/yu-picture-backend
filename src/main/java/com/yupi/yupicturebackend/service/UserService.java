@@ -42,10 +42,26 @@ public interface UserService extends IService<User> {
     String getEncryptPassword(String userPassword);
 
     /**
+     * 获取当前登录用户信息。
+     *
+     * @param request HTTP 请求对象，用于获取与当前会话关联的用户信息
+     * @return 当前登录的用户对象，如果未找到登录用户则可能返回 null
+     */
+    User getLoginUser(HttpServletRequest request);
+
+    /**
      * 获得脱敏后的登录用户信息
      *
      * @param user 用户
      * @return 脱敏后的用户信息
      */
     LoginUserVO getLoginUserVO(User user);
+
+    /**
+     * 注销当前登录用户（登录态注销）
+     *
+     * @param request HTTP 请求对象，用于获取与当前会话关联的用户信息
+     * @return 当前登录的用户对象，如果未找到登录用户则可能返回 null
+     */
+    boolean getLogoutUser(HttpServletRequest request);
 }
