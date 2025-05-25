@@ -1,8 +1,7 @@
-package com.yupi.yupicturebackend.model.vo;
+package com.yupi.yupicturebackend.model.vo.user;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -15,7 +14,7 @@ import java.util.Date;
  */
 @TableName(value = "user")
 @Data
-public class LoginUserVO {
+public class UserVO {
     /**
      * id
      */
@@ -48,19 +47,9 @@ public class LoginUserVO {
     private String userRole;
 
     /**
-     * 编辑时间
-     */
-    private Date editTime;
-
-    /**
      * 创建时间
      */
     private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 
     @Override
     public boolean equals(Object that) {
@@ -73,16 +62,14 @@ public class LoginUserVO {
         if (getClass() != that.getClass()) {
             return false;
         }
-        LoginUserVO other = (LoginUserVO) that;
+        UserVO other = (UserVO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
                 && (this.getUserAccount() == null ? other.getUserAccount() == null : this.getUserAccount().equals(other.getUserAccount()))
                 && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
                 && (this.getUserAvatar() == null ? other.getUserAvatar() == null : this.getUserAvatar().equals(other.getUserAvatar()))
                 && (this.getUserProfile() == null ? other.getUserProfile() == null : this.getUserProfile().equals(other.getUserProfile()))
                 && (this.getUserRole() == null ? other.getUserRole() == null : this.getUserRole().equals(other.getUserRole()))
-                && (this.getEditTime() == null ? other.getEditTime() == null : this.getEditTime().equals(other.getEditTime()))
-                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override
@@ -95,9 +82,7 @@ public class LoginUserVO {
         result = prime * result + ((getUserAvatar() == null) ? 0 : getUserAvatar().hashCode());
         result = prime * result + ((getUserProfile() == null) ? 0 : getUserProfile().hashCode());
         result = prime * result + ((getUserRole() == null) ? 0 : getUserRole().hashCode());
-        result = prime * result + ((getEditTime() == null) ? 0 : getEditTime().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }
 
@@ -113,9 +98,7 @@ public class LoginUserVO {
         sb.append(", userAvatar=").append(userAvatar);
         sb.append(", userProfile=").append(userProfile);
         sb.append(", userRole=").append(userRole);
-        sb.append(", editTime=").append(editTime);
         sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }
