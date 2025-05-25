@@ -1,10 +1,14 @@
 package com.yupi.yupicturebackend.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.yupi.yupicturebackend.model.dto.user.UserQueryRequest;
 import com.yupi.yupicturebackend.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yupi.yupicturebackend.model.vo.LoginUserVO;
+import com.yupi.yupicturebackend.model.vo.user.LoginUserVO;
+import com.yupi.yupicturebackend.model.vo.user.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author yFan
@@ -58,10 +62,35 @@ public interface UserService extends IService<User> {
     LoginUserVO getLoginUserVO(User user);
 
     /**
+     * 获得脱敏后的用户信息
+     *
+     * @param user
+     * @return
+     */
+    UserVO getUserVO(User user);
+
+    /**
+     * 获得脱敏后的用户信息列表
+     *
+     * @param userList
+     * @return 脱敏后的用户列表
+     */
+    List<UserVO> getUserVOList(List<User> userList);
+
+    /**
      * 注销当前登录用户（登录态注销）
      *
      * @param request HTTP 请求对象，用于获取与当前会话关联的用户信息
      * @return 当前登录的用户对象，如果未找到登录用户则可能返回 null
      */
     boolean getLogoutUser(HttpServletRequest request);
+
+
+    /**
+     * 获取查询条件
+     *
+     * @param userQueryRequest
+     * @return
+     */
+    QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
 }
