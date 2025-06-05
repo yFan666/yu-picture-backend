@@ -2,6 +2,11 @@ package com.yupi.yupicturebackend.exception;
 
 import lombok.Getter;
 
+/**
+ * 自定义业务异常
+ * @author yFan666
+ * @date 2025/05/29 16:56
+ */
 @Getter
 public class BusinessException extends RuntimeException {
 
