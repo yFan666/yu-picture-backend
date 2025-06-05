@@ -16,7 +16,6 @@ public interface UserConstant {
      */
     String ADMIN_ROLE = "admin";
     // endregion
-
     // 加盐
     String SALE = "yupi";
 }
