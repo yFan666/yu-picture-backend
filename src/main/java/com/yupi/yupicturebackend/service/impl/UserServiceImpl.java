@@ -134,8 +134,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public String getEncryptPassword(String userPassword) {
         // 加盐，混淆密码
-        final String SALT = "yupi";
-        return DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
+        return DigestUtils.md5DigestAsHex((UserConstant.SALE + userPassword).getBytes());
     }
 
     /**
@@ -222,6 +221,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String userRole = userQueryRequest.getUserRole();
         String sortField = userQueryRequest.getSortField();
         String sortOrder = userQueryRequest.getSortOrder();
+
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(ObjUtil.isNotNull(id), "id", id);
         queryWrapper.eq(StrUtil.isNotBlank(userRole), "userRole", userRole);

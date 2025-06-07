@@ -4,7 +4,7 @@ import com.yupi.yupicturebackend.exception.ErrorCode;
 import lombok.Data;
 
 /**
- * 全局相应封装类
+ * 全局相应封装类 - 通用相应类
  * @param <T>
  */
 @Data
